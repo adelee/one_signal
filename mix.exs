@@ -12,7 +12,8 @@ defmodule OneSignal.Mixfile do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: @description,
-      package: package()
+      package: package(),
+      xref: [exclude: Poison]
     ]
   end
 
