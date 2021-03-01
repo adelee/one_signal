@@ -19,6 +19,9 @@ defmodule OneSignal.Param do
             messages: %{},
             platforms: nil,
             send_after: nil,
+            summary_arg: nil,
+            summary_arg_count: nil,
+            thread_id: nil,
             tags: nil,
             wp_params: nil
 
@@ -269,6 +272,48 @@ defmodule OneSignal.Param do
 
   def put_data(%Param{data: data} = param, key, value) do
     %{param | data: Map.put(data, key, value)}
+  end
+
+  @doc """
+  Put thread_id
+
+  This parameter is supported in iOS 12 and above. It allows you to group related notifications together.
+
+  If two notifications have the same thread-id, they will both be added to the same group.
+
+  iOS 12+
+  """
+  def put_thread_id(%Param{} = param, thread_id) do
+    %{param | thread_id: thread_id}
+  end
+
+  @doc """
+  Put summary_arg
+
+  When using thread_id to create grouped notifications in iOS 12+, you can also control the summary.
+  For example, a grouped notification can say "12 more notifications from John Doe".
+
+  The summary_arg lets you set the name of the person/thing the notifications are coming from, and will
+  show up as "X more notifications from summary_arg"
+
+  iOS 12+
+  """
+  def put_summary_arg(%Param{} = param, summary_arg) do
+    %{param | summary_arg: summary_arg}
+  end
+
+  @doc """
+  Put summary_arg_count
+
+  When using thread_id, you can also control the count of the number of notifications in the group.
+  For example, if the group already has 12 notifications, and you send a new notification with
+  summary_arg_count = 2, the new total will be 14 and the summary will be
+  "14 more notifications from summary_arg"
+
+  iOS 12+
+  """
+  def put_summary_arg_count(%Param{} = param, summary_arg_count) do
+    %{param | summary_arg_count: summary_arg_count}
   end
 
   @doc """

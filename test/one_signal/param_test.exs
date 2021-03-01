@@ -142,4 +142,19 @@ defmodule OneSignal.ParamTest do
 
     assert world == "World!"
   end
+
+  test "put thread_id" do
+    param = put_thread_id(OneSignal.new(), "1")
+    assert param.thread_id == "1"
+  end
+
+  test "put summary_arg" do
+    param = put_summary_arg(OneSignal.new(), "bogus summary")
+    assert param.summary_arg == "bogus summary"
+  end
+
+  test "put summary_arg_count" do
+    param = put_summary_arg_count(OneSignal.new(), "4")
+    assert param.summary_arg_count == "4"
+  end
 end
