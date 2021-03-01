@@ -1,26 +1,26 @@
 defmodule OneSignal.Param do
   alias OneSignal.Param
 
-  defstruct android_channel_id: nil,
-            messages: %{},
-            headings: nil,
-            platforms: nil,
-            included_segments: nil,
-            excluded_segments: nil,
-            include_external_user_ids: nil,
-            exclude_external_user_ids: nil,
-            include_player_ids: nil,
-            exclude_player_ids: nil,
-            filters: [],
-            tags: nil,
-            data: nil,
-            ios_params: nil,
+  defstruct adm_params: nil,
+            android_channel_id: nil,
             android_params: nil,
-            adm_params: nil,
-            wp_params: nil,
             chrome_params: nil,
+            data: nil,
+            exclude_external_user_ids: nil,
+            exclude_player_ids: nil,
+            excluded_segments: nil,
+            filters: [],
             firefox_params: nil,
-            send_after: nil
+            headings: nil,
+            include_external_user_ids: nil,
+            include_player_ids: nil,
+            included_segments: nil,
+            ios_params: nil,
+            messages: %{},
+            platforms: nil,
+            send_after: nil,
+            tags: nil,
+            wp_params: nil
 
   defp to_string_key({k, v}) do
     {to_string(k), v}
