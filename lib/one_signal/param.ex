@@ -5,6 +5,7 @@ defmodule OneSignal.Param do
             android_channel_id: nil,
             android_params: nil,
             chrome_params: nil,
+            content_available: nil,
             data: nil,
             exclude_external_user_ids: nil,
             exclude_player_ids: nil,
@@ -273,6 +274,17 @@ defmodule OneSignal.Param do
   def put_data(%Param{data: data} = param, key, value) do
     %{param | data: Map.put(data, key, value)}
   end
+
+
+  @doc """
+  Put content available
+
+  See https://documentation.onesignal.com/reference/create-notification#notification-content
+  """
+  def put_content_available(%Param{} = param, content_available) when is_boolean(content_available) do
+    %{param | content_available: content_available}
+  end
+
 
   @doc """
   Put thread_id

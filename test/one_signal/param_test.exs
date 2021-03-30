@@ -157,4 +157,9 @@ defmodule OneSignal.ParamTest do
     param = put_summary_arg_count(OneSignal.new(), "4")
     assert param.summary_arg_count == "4"
   end
+
+  test "put content_available" do
+    param = put_content_available(OneSignal.new(), true)
+    assert param.content_available == true
+  end
 end
