@@ -17,6 +17,9 @@ defmodule OneSignal.Param do
             include_player_ids: nil,
             included_segments: nil,
             ios_params: nil,
+            ios_badgeCount: nil,
+            ios_badgeType: nil,
+            ios_sound: nil,
             messages: %{},
             platforms: nil,
             send_after: nil,
@@ -275,16 +278,15 @@ defmodule OneSignal.Param do
     %{param | data: Map.put(data, key, value)}
   end
 
-
   @doc """
   Put content available
 
   See https://documentation.onesignal.com/reference/create-notification#notification-content
   """
-  def put_content_available(%Param{} = param, content_available) when is_boolean(content_available) do
+  def put_content_available(%Param{} = param, content_available)
+      when is_boolean(content_available) do
     %{param | content_available: content_available}
   end
-
 
   @doc """
   Put thread_id
@@ -334,4 +336,25 @@ defmodule OneSignal.Param do
   def set_android_channel_id(param, channel_id) do
     %{param | android_channel_id: channel_id}
   end
+
+  @doc """
+  Set ios badge
+
+  Use negative value together with `:increase` to decrease badge count
+  """
+  def set_badge(%Param{} = params, action, badge_count) when is_integer(badge_count) do
+    %{params | ios_badgeType: badge_type(action), ios_badgeCount: badge_count}
+  end
+
+  @doc """
+  Sound file that is included in your app to play instead of the default device notification sound. Pass nil
+  to disable vibration and sound for the notification.
+  """
+  def set_sound(%Param{} = params, sound_file_name) when is_binary(sound_file_name) do
+    %{params | ios_sound: sound_file_name}
+  end
+
+  defp badge_type(:increase), do: "Increase"
+  defp badge_type(:set), do: "SetTo"
+  defp badge_type(_), do: badge_type(:set)
 end

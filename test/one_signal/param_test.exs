@@ -162,4 +162,21 @@ defmodule OneSignal.ParamTest do
     param = put_content_available(OneSignal.new(), true)
     assert param.content_available == true
   end
+
+  test "put set_sound" do
+    param = set_sound(OneSignal.new(), "test.wav")
+    assert param.ios_sound == "test.wav"
+  end
+
+  test "increases badgeCount" do
+    param = set_badge(OneSignal.new(), :increase, 10)
+    assert param.ios_badgeType == "Increase"
+    assert param.ios_badgeCount == 10
+  end
+
+  test "sets badgeCount" do
+    param = set_badge(OneSignal.new(), :set, 5)
+    assert param.ios_badgeType == "SetTo"
+    assert param.ios_badgeCount == 5
+  end
 end
