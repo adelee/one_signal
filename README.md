@@ -6,7 +6,7 @@ Elixir wrapper of [OneSignal](https://onesignal.com)
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add one_signal to your list of dependencies in `mix.exs`:
+1. Add one_signal to your list of dependencies in `mix.exs`:
 
 ```elixir
   def deps do
@@ -14,22 +14,23 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   end
 ```
 
-  2. Ensure one_signal is started before your application:
+3. Puts config your `config.exs`
 
 ```elixir
-  def application do
-    [applications: [:one_signal]]
-  end
-```
-
-  3. Puts config your `config.exs`
-
-```elixir
+# deprecated
 config :one_signal, OneSignal,
   api_key: "your api key",
   app_id: "your app id",
-```
 
+# new
+config :one_signal,
+  api_key: "your api key",
+  app_id: "your app id",
+  http_client: OneSignal.HTTPClient.HTTPoison, #default
+  json_library: Jason #default
+
+
+```
 
 ## Composable design, Data structure oriented
 

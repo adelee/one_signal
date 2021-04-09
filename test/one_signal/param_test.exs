@@ -1,6 +1,9 @@
 defmodule OneSignal.ParamTest do
   use ExUnit.Case
   import OneSignal.Param
+  import Hammox
+
+  setup :verify_on_exit!
 
   test "put message" do
     param =
@@ -99,6 +102,11 @@ defmodule OneSignal.ParamTest do
   end
 
   test "push notification" do
+    TestHttpClient
+    |> expect(:post, fn _url, _body ->
+      {:ok, success()}
+    end)
+
     notified =
       OneSignal.new()
       |> put_heading("Welcome!")
@@ -112,6 +120,11 @@ defmodule OneSignal.ParamTest do
   end
 
   test "push notification with filter" do
+    TestHttpClient
+    |> expect(:post, fn _url, _body ->
+      {:ok, success()}
+    end)
+
     notified =
       OneSignal.new()
       |> put_heading("Welcome!")
@@ -178,5 +191,19 @@ defmodule OneSignal.ParamTest do
     param = set_badge(OneSignal.new(), :set, 5)
     assert param.ios_badgeType == "SetTo"
     assert param.ios_badgeCount == 5
+  end
+
+  defp success() do
+    %{
+      status: 200,
+      body:
+        %{
+          id: "b98881cc-1e94-4366-bbd9-db8f3429292b",
+          recipients: 1,
+          external_id: nil
+        }
+        |> Jason.encode!(),
+      headers: []
+    }
   end
 end

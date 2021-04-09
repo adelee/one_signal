@@ -13,7 +13,7 @@ defmodule OneSignal.Mixfile do
       deps: deps(),
       description: @description,
       package: package(),
-      xref: [exclude: Poison]
+      xref: [exclude: Jason]
     ]
   end
 
@@ -34,9 +34,10 @@ defmodule OneSignal.Mixfile do
 
   defp deps() do
     [
-      {:poison, "~> 3.1.0", optional: true},
-      {:httpoison, "~> 1.8"},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:jason, "~> 1.1", optional: true},
+      {:httpoison, "~> 1.8", optional: true},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:hammox, "~> 0.5", only: :test}
     ]
   end
 end

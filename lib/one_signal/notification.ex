@@ -1,5 +1,5 @@
 defmodule OneSignal.Notification do
-  defstruct id: nil, recipients: 0
+  defstruct id: nil, recipients: 0, errors: []
 
   def post_notification_url() do
     OneSignal.endpoint() <> "/notifications"
@@ -9,22 +9,11 @@ defmodule OneSignal.Notification do
   Send push notification
   iex> OneSignal.Notification.send(%{"en" => "Hello!", "ja" => "はろー"}, %{"included_segments" => ["All"], "isAndroid" => true})
   """
-  def send(contents, opts) do
-    param = %{"contents" => contents, "app_id" => OneSignal.fetch_app_id()}
-    body = Map.merge(param, opts)
-    url = post_notification_url()
-
-    case OneSignal.API.post(url, body) do
-      {:ok, response} ->
-        response = Enum.map(response, &to_key_atom/1)
-        struct(__MODULE__, response)
-
-      err ->
-        err
-    end
+  def send(%OneSignal.Param{} = params) do
+    params |> OneSignal.Param.build() |> send
   end
 
-  def send(body) do
+  def send(body) when is_map(body) do
     case OneSignal.API.post(post_notification_url(), body) do
       {:ok, response} ->
         response = Enum.map(response, &to_key_atom/1)
