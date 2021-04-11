@@ -269,6 +269,11 @@ defmodule OneSignal.Param do
 
   @doc """
   Put data
+
+  A custom map of data that is passed back to your app. Same as using Additional Data within the dashboard. Can use up to 2048
+  bytes of data.
+
+  Example: {"abc": 123, "foo": "bar", "event_performed": true, "amount": 12.1}
   """
   def put_data(%Param{data: nil} = param, key, value) do
     %{param | data: %{key => value}}
@@ -276,6 +281,14 @@ defmodule OneSignal.Param do
 
   def put_data(%Param{data: data} = param, key, value) do
     %{param | data: Map.put(data, key, value)}
+  end
+
+  def put_data(%Param{data: nil} = param, map) when is_map(map) do
+    %{param | data: map}
+  end
+
+  def put_data(%Param{data: data} = param, map) when is_map(map) do
+    %{param | data: Map.merge(data, map)}
   end
 
   @doc """

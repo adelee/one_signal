@@ -156,6 +156,16 @@ defmodule OneSignal.ParamTest do
     assert world == "World!"
   end
 
+  test "put data as map" do
+    world =
+      OneSignal.new()
+      |> put_data(%{test: 1})
+      |> build
+      |> get_in(["data", :test])
+
+    assert world == 1
+  end
+
   test "put thread_id" do
     param = put_thread_id(OneSignal.new(), "1")
     assert param.thread_id == "1"
