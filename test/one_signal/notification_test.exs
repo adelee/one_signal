@@ -13,7 +13,11 @@ defmodule OneSignal.NotificationTest do
 
     notification = OneSignal.new()
 
-    OneSignal.Notification.send(notification)
+    assert %OneSignal.Notification{
+             errors: [],
+             id: "b98881cc-1e94-4366-bbd9-db8f3429292b",
+             recipients: 1
+           } = OneSignal.Notification.send(notification)
   end
 
   defp success() do
